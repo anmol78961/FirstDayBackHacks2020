@@ -9,7 +9,8 @@ Requirements:
 - The App will either store session based save data, or will have a login to store user data on a database to preserve progress
 - The main menu will have a "Play" button and a "Found Words" button
 
-- From the Play button, there will be a difficulty selection screen
+- From the Play button, there will be a difficulty selection screen (no difficuilty)
+- The difficulty increases as the game goes on
 
 - From the Found Words button, there will be a screen displaying a list of all the words the user has found, and their definitions
 
