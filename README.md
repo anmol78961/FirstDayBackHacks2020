@@ -1,9 +1,9 @@
 # FirstDayBackHacks2020Submission
 Taska:
 - Parth: web app
--Dustin: basics and check the web app (cuz u know django)
--Anmol: Basics, video and powerpoint
--the video and powerpoint are just to explain what the app is all about
+- Dustin: basics and check the web app (cuz u know django)
+- Anmol: Basics, video and powerpoint
+- the video and powerpoint are just to explain what the app is all about
 
 Requirements:
 - Web app
