@@ -5,6 +5,10 @@ Taska:
 - Anmol: Basics, video and powerpoint
 - the video and powerpoint are just to explain what the app is all about
 
+TODO:
+- Add Gamification
+- Merge Logic and Webapp
+
 Requirements:
 - Web app
 - Is a word unscramble game, where a randomized set of letters are displayed on the screen.
