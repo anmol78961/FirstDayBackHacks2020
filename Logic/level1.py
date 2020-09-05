@@ -2,7 +2,6 @@ import Dictionary
 import Scramble
 from Point import Point
 
-_points = 0
 __question = "igyleln"
 extra_list = []
 word_list = ["yelling", "eying", "lying", "glen", "lien"]
