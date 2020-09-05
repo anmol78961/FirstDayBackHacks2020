@@ -1,5 +1,32 @@
 import Dictionary
 import Scramble
+# from Point import Point
+
+_points = 0
+__question = "igyleln"
+extra_list = []
+word_list = ["yelling", "eying", "lying", "glen", "lien"]
+word_found = []
+definition = []
+
+
+class Point:
+    class Point:
+        _points = 0
+
+        @classmethod
+        def add_extra_points(cls):
+            cls._points += 1
+            print("You earned 1 point for 2 extra words")
+
+        @classmethod
+        def add_points(cls):
+            cls._points += 2
+            print("You earned 2 points for every valid word")
+
+        @classmethod
+        def get_points(cls):
+            return cls._points
 
 
 def check_list(to_find, found):
@@ -35,78 +62,106 @@ def split(word, user_word):
         return False
 
 
+def check_word_found(word):
+    if word in word_found:
+        print("You have already found this word \n")
+        return True
+    else:
+        return False
+
+
+def check_extra_word_found(word):
+    if word in extra_list:
+        print("You have already found this word \n")
+        return True
+    else:
+        return False
+
+
+def print_all():
+    print("----------------------------------------------------------------------------------------------------\n")
+    print("Hurray you earned ", end="")
+    print(Point.Point.get_points(), "points :)", "\n")
+
+    print("The words found are: ")
+    for x in word_found:
+        print(x)
+    print()
+
+    print("The extra word found are: ")
+    if len(extra_list) is None:
+        print("No extra elements were found \n")
+    else:
+        for z in extra_list:
+            print(z)
+        print()
+
+    print("The definition of the words found are: ")
+    for y in definition:
+        print(y)
+    print()
+
+
 def start():
-    question = "igyleln"
+    question = __question
+
     print(f"Unscramble the word \"{question}\"")
-
-    extra_list = []
-    word_list = ["yelling", "eying", "lying", "glen", "lien"]
-    word_found = []
-    definition = []
-
+    # The user has to enter a word with 3 letters or above
+    # the user enters "_scramble_" to re-scramble the question
     print("Enter the word you can form from unscrambling the given word: "
-          "and enter \"_scramble_\" to re-scramble the question")
+          "and enter \"_scramble\" to re-scramble the question")
 
+    # In this loop with the help of check_list() function we can get to know if all the words are found
+    # when all the words are found it exits the loop
+    # then it prints all the data collected
     while check_list(word_list, word_found) is False:
-        user_input = str(input())
+        user_input = str(input()).lower()
         limit = len(user_input)
 
+        # Checks if the user input is below the limit of 3 letters
         if limit <= 2:
             print("Enter a word with 3 letters or above \n")
             continue
 
-        if user_input.lower() == "_scramble":
+        # User enters "_scramble_" to re-shuffle the question word
+        if user_input == "_scramble":
             re_scramble = Scramble.word_scrambler(question)
             print(re_scramble, "\n")
             continue
 
+        # checks if the characters in the user input exist in the question
         if split(question, user_input) is False:
             print("Please enter a word with the characters in the scrambled word \n")
             continue
-        check = Dictionary.spell_check(user_input)
 
+        # gets the maening of the word entered if the word exists
+        check = Dictionary.spell_check(user_input)
         if check is not False:
 
             if user_input in word_list:
 
-                if user_input in word_found:
-                    print("You have already found this word \n")
-                    continue
-
                 word_found.append(user_input)
                 definition.append(check)
-                print("word found \n")
+                Point.Point.add_points()
+                print("Word found \n")
 
             else:
-                if user_input in extra_list:
-                    print("extra word already found \n")
+                if check_word_found(user_input) is True:
+                    continue
+                elif check_extra_word_found(user_input) is True:
                     continue
 
                 extra_list.append(user_input)
                 definition.append(check)
-                print("extra word \n")
+                if len(extra_list) % 2 == 0:
+                    Point.Point.add_extra_points()
+                print("Extra word \n")
 
         else:
             print("Word doesn't exist, try again \n")
 
     else:
-        print("The words found are: ")
-        for x in word_found:
-            print(x)
-        print()
-
-        print("The extra word found are: ")
-        if len(extra_list) is None:
-            print("No extra elements were found \n")
-        else:
-            for z in extra_list:
-                print(z)
-            print()
-
-        print("The definition of the words found are: ")
-        for y in definition:
-            print(y)
-        print()
+        print_all()
 
 
 pass
