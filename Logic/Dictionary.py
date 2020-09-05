@@ -32,6 +32,6 @@ def spell_check(word):
     check = PyDictionary(word).getMeanings()
     enable_print()
     if check == {word: None}:
-        print("Word doesn't exist")
+        return False
     else:
-        print(check)
+        return check
