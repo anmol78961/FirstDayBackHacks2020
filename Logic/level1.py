@@ -49,6 +49,12 @@ def start():
 
     while check_list(word_list, word_found) is False:
         user_input = str(input())
+        limit = len(user_input)
+
+        if limit <= 2:
+            print("Enter a word with 3 letters or above \n")
+            continue
+
         if user_input.lower() == "_scramble":
             re_scramble = Scramble.word_scrambler(question)
             print(re_scramble, "\n")
