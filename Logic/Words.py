@@ -1,5 +1,7 @@
 # Grabs and loads the words from dictionary3000.txt to use as the basis for
 #   the initial scramble.
+import random
+
 def ReadFile(dfile):
     file1 = open(dfile)
     words1 = file1.readlines()
@@ -26,6 +28,8 @@ def GenerateWordList(difficulty):
                 generatedOutput.append(word)
     elif difficulty == 3:
         for word in wordList:
-            if len(word) in range(8, 20):
+            if len(word) in range(8, 20): 
                 generatedOutput.append(word)
+    # shuffles the list of words so they are not in alphabetical order
+    random.shuffle(generatedOutput)
     return generatedOutput
