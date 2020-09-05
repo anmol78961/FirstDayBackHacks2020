@@ -18,7 +18,7 @@ def start():
         if split(question, user_input) is False:
             print("Please enter a word with the characters in the scrambled word \n")
             continue
-        check = test.spell_check(user_input)
+        check = Dictionary.spell_check(user_input)
 
         if check is not False:
 
