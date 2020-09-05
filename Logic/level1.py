@@ -1,6 +1,6 @@
 import Dictionary
 import Scramble
-# from Point import Point
+from Point import Point
 
 _points = 0
 __question = "igyleln"
@@ -8,25 +8,6 @@ extra_list = []
 word_list = ["yelling", "eying", "lying", "glen", "lien"]
 word_found = []
 definition = []
-
-
-class Point:
-    class Point:
-        _points = 0
-
-        @classmethod
-        def add_extra_points(cls):
-            cls._points += 1
-            print("You earned 1 point for 2 extra words")
-
-        @classmethod
-        def add_points(cls):
-            cls._points += 2
-            print("You earned 2 points for every valid word")
-
-        @classmethod
-        def get_points(cls):
-            return cls._points
 
 
 def check_list(to_find, found):
@@ -78,10 +59,11 @@ def check_extra_word_found(word):
         return False
 
 
+# Prints everything the user has found throughout the level after the level ends
 def print_all():
     print("----------------------------------------------------------------------------------------------------\n")
     print("Hurray you earned ", end="")
-    print(Point.Point.get_points(), "points :)", "\n")
+    print(Point.get_points(), "points :)", "\n")
 
     print("The words found are: ")
     for x in word_found:
@@ -134,7 +116,7 @@ def start():
             print("Please enter a word with the characters in the scrambled word \n")
             continue
 
-        # gets the maening of the word entered if the word exists
+        # gets the meaning of the word entered if the word exists
         check = Dictionary.spell_check(user_input)
         if check is not False:
 
@@ -142,7 +124,7 @@ def start():
 
                 word_found.append(user_input)
                 definition.append(check)
-                Point.Point.add_points()
+                Point.add_points()
                 print("Word found \n")
 
             else:
@@ -154,7 +136,7 @@ def start():
                 extra_list.append(user_input)
                 definition.append(check)
                 if len(extra_list) % 2 == 0:
-                    Point.Point.add_extra_points()
+                    Point.add_extra_points()
                 print("Extra word \n")
 
         else:
