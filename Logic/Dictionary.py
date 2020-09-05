@@ -1,33 +1,3 @@
-# changes to make in core.py in PyDictionary
-#     @staticmethod
-#     def meaning(term, disable_errors=False):
-#         if len(term.split()) > 1:
-#             print("Error: A Term must be only a single word")
-#         else:
-#             try:
-#                 html = _get_soup_object("http://wordnetweb.princeton.edu/perl/webwn?s={0}".format(
-#                     term))
-#                 types = html.findAll("h3")
-#                 length = len(types)
-#                 lists = html.findAll("ul")
-#                 out = {}
-#                 for a in types:
-#                     reg = str(lists[types.index(a)])
-#                     meanings = []
-#                     for x in re.findall(r'\((.*?)\)', reg):
-#                         if 'often followed by' in x:
-#                             pass
-#                         elif len(x) > 5 or ' ' in str(x):
-#                             meanings.append(x)
-#                     name = a.text
-#                     out[name] = meanings
-#                 return out
-#             except Exception as e:
-#                 if disable_errors == False:
-#                     print("Error: The Following Error occured: %s" % e) ==> change this to ==> return False
-
-
-
 # Used to make api calls to PyDictionary
 # Checks the submitted word,
 #               returns true or false,
@@ -59,12 +29,9 @@ def enable_print():
 # returns the result
 def spell_check(word):
     block_print()
-    check = PyDictionary.meaning(word)
+    check = PyDictionary(word).getMeanings()
     enable_print()
-    if check == {word: False}:
+    if check == {word: None}:
         print("Word doesn't exist")
     else:
         print(check)
-
-
-pass
