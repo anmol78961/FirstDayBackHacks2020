@@ -1,4 +1,38 @@
 import Dictionary
+import Scramble
+
+
+def check_list(to_find, found):
+    count = 0
+    to_find_len = len(to_find)
+
+    for x in found:
+        if x in to_find:
+            to_find.remove(x)
+            count += 1
+
+    if count == to_find_len:
+        return True
+    else:
+        return False
+
+
+def split(word, user_word):
+    new_word = word.lower()
+    new_user_word = user_word.lower()
+    char_len = 0
+    user_len = len(new_user_word)
+    word_split = list(new_word)
+    user_split = list(new_user_word)
+    for x in user_split:
+        if x in word_split:
+            word_split.remove(x)
+            char_len += 1
+
+    if char_len == user_len:
+        return True
+    else:
+        return False
 
 
 def start():
@@ -10,10 +44,15 @@ def start():
     word_found = []
     definition = []
 
-    print("Enter the word you can form from unscrambling the given word: ")
+    print("Enter the word you can form from unscrambling the given word: "
+          "and enter \"_scramble_\" to re-scramble the question")
 
     while check_list(word_list, word_found) is False:
         user_input = str(input())
+        if user_input.lower() == "_scramble":
+            re_scramble = Scramble.word_scrambler(question)
+            print(re_scramble, "\n")
+            continue
 
         if split(question, user_input) is False:
             print("Please enter a word with the characters in the scrambled word \n")
@@ -64,34 +103,4 @@ def start():
         print()
 
 
-def split(word, user_word):
-    new_word = word.lower()
-    new_user_word = user_word.lower()
-    char_len = 0
-    user_len = len(new_user_word)
-    word_split = list(new_word)
-    user_split = list(new_user_word)
-    for x in user_split:
-        if x in word_split:
-            word_split.remove(x)
-            char_len += 1
-
-    if char_len == user_len:
-        return True
-    else:
-        return False
-
-
-def check_list(to_find, found):
-    count = 0
-    to_find_len = len(to_find)
-
-    for x in found:
-        if x in to_find:
-            to_find.remove(x)
-            count += 1
-
-    if count == to_find_len:
-        return True
-    else:
-        return False
+pass
