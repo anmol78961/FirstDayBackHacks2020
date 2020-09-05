@@ -10,6 +10,9 @@ class points:
     def add_all_points(self):
         self.extra_point()
         self.add_point()
+       
+    def spend_points(self):
+        self._points -= 1
     
     def get_points(self):
         return self._points
