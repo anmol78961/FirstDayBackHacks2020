@@ -28,6 +28,12 @@ def enable_print():
 # calls the PyDictionary api
 # returns the result
 def spell_check(word):
+    char_list = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '!', '"', '#', '$', '%', '&', '\\', ' ', "'", '(',
+                 ')', '*', '+', ',', '-', '.', '/', ':', ';', '?', '@', '[', ']', '^', '_', '`', '{', '|', '}', '~']
+    new_word = list(word)
+    for x in new_word:
+        if x in char_list:
+            return False
     block_print()
     check = PyDictionary(word).getMeanings()
     enable_print()
@@ -35,3 +41,6 @@ def spell_check(word):
         return False
     else:
         return check
+
+
+pass
