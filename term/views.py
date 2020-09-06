@@ -3,6 +3,85 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login
 from django.contrib import messages
 # Create your views here.
+from .forms import levelone
+from PyDictionary import PyDictionary
+import sys, os, random
+
+
+extra_list = []
+word_list = ["yelling", "eying", "lying", "glen", "lien"]
+word_found = []
+definition = []
+
+def check_list(to_find, found):
+    count = 0
+    to_find_len = len(to_find)
+
+    for x in found:
+        if x in to_find:
+            to_find.remove(x)
+            count += 1
+
+    if count == to_find_len:
+        return True
+    else:
+        return False
+
+def split(word, user_word):
+    new_word = word.lower()
+    new_user_word = user_word.lower()
+    char_len = 0
+    user_len = len(new_user_word)
+    word_split = list(new_word)
+    user_split = list(new_user_word)
+    for x in user_split:
+        if x in word_split:
+            word_split.remove(x)
+            char_len += 1
+
+    if char_len == user_len:
+        return True
+    else:
+        return False
+
+def check_word_found(word):
+    if word in word_found:
+        print("You have already found this word \n")
+        return True
+    else:
+        return False
+
+def check_extra_word_found(word):
+    if word in extra_list:
+        return True
+    else:
+        return False
+
+
+def spell_check(word):
+    char_list = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '!', '"', '#', '$', '%', '&', '\\', ' ', "'", '(',
+                 ')', '*', '+', ',', '-', '.', '/', ':', ';', '?', '@', '[', ']', '^', '_', '`', '{', '|', '}', '~']
+    new_word = list(word)
+    for x in new_word:
+        if x in char_list:
+            return False
+    #block_print()
+    check = PyDictionary(word).getMeanings()
+    #enable_print()
+    if check == {word: None}:
+        return False
+    else:
+        return check
+
+
+pass
+
+def WordScrambler(word):
+    listWord = list(word)
+    random.shuffle(listWord)
+    result = ''.join(listWord)
+    return result
+
 
 
 def index(request):
@@ -34,3 +113,52 @@ def register(request):
 
 def levels(request):
     return render(request, "term/level.html")
+
+def level1(request):
+    question="igyleln"
+    if request.method == 'POST':
+        form = levelone(request.POST)
+
+        if form.is_valid():
+            while check_list(word_list, word_found) is False:
+                user_input = str(form.cleaned_data['Word'])
+                limit = len(user_input)
+
+                if limit <= 2:
+                    messages.info(request,"Please enter a word with 3 characters or above.")
+                    return redirect('level1')
+
+                if user_input == "_scramble":
+                    re_scramble = WordScrambler(question)
+                    question = re_scramble
+                    messages.info(request,"Your question has been re_scrambled")
+                    return render(request, "term/level1.html",{'form':form, 'que':question})
+
+                if split(question, user_input) is False:
+                    messages.info(request,"Please enter a word with the characters in the scrambled word")
+                    return redirect('level1')
+
+                check = spell_check(user_input)
+                if check is not False:
+                    if user_input in word_list:
+                        if user_input in word_found:
+                            messages.info(request,"The word you found has already been discovered by you. Try again please!")
+                            return redirect('level1')
+
+                        #if check_extra_word_found(user_input) is True:
+                        else:
+                            if check_extra_word_found(user_input) is True:
+                                messages.info(request,"Congrats, you discovered an extra word!")
+                                return redirect('level1')
+                            print(word_found)
+                            word_found.append(user_input)
+                            definition.append(check)
+                            messages.info(request,"Congrats, Word found!")
+                            return redirect('level1')
+
+                    
+                       
+    else:
+        form = levelone()
+    context={'form':form, 'que':question}
+    return render(request, "term/level1.html", context)
