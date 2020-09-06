@@ -8,6 +8,23 @@ from .forms import levelone
 from PyDictionary import PyDictionary
 import random
 
+class Point:
+    _points = 0
+
+    @classmethod
+    def add_extra_points(cls):
+        cls._points += 1
+        print("You earned 1 point for 2 extra words")
+
+    @classmethod
+    def add_points(cls):
+        cls._points += 2
+        print("You earned 2 points for every valid word")
+
+    @classmethod
+    def get_points(cls):
+        return cls._points
+
 
 extra_list = []
 word_found = []
@@ -148,6 +165,7 @@ def level1(request):
                     if user_input in word_list:
                         word_found.append(user_input)
                         definition.append(check)
+                        Point.add_points()
                         messages.info(request,"You earned 2 points for every valid word.")
                         messages.info(request, "Congrats, Word Found!")
                         return redirect('level1')
@@ -161,6 +179,7 @@ def level1(request):
 
                         extra_list.append(user_input)
                         definition.append(check)
+                        Point.add_extra_points()
                         if len(extra_list) % 2 == 0:
                             messages.info(request,"You earned 1 Point for 2 extra words")
                         messages.info(request, "Congrats, Extra Word Found!")
@@ -176,7 +195,7 @@ def level1(request):
                 return render(request,"term/done.html", context)
     else:
         form = levelone()
-    context={'form':form, 'que':question, 'point':0, 'lev':"Level 1"}
+    context={'form':form, 'que':question, 'point':Point.get_points(), 'lev':"Level 1"}
     return render(request, "term/level1.html", context)
 
 
@@ -210,6 +229,7 @@ def level2(request):
                     if user_input in word_list:
                         word_found.append(user_input)
                         definition.append(check)
+                        Point.add_points()
                         messages.info(request,"You earned 2 points for every valid word.")
                         messages.info(request, "Congrats, Word Found!")
                         return redirect('level2')
@@ -223,6 +243,7 @@ def level2(request):
 
                         extra_list.append(user_input)
                         definition.append(check)
+                        Point.add_extra_points()
                         if len(extra_list) % 2 == 0:
                             messages.info(request,"You earned 1 Point for 2 extra words")
                         messages.info(request, "Congrats, Extra Word Found!")
@@ -238,7 +259,7 @@ def level2(request):
                 return render(request,"term/done.html", context)
     else:
         form = levelone()
-    context={'form':form, 'que':question, 'point':0}
+    context={'form':form, 'que':question, 'point':Point.get_points()}
     return render(request, "term/level2.html", context)
 
 
@@ -272,6 +293,7 @@ def level3(request):
                     if user_input in word_list:
                         word_found.append(user_input)
                         definition.append(check)
+                        Point.add_points()
                         messages.info(request,"You earned 2 points for every valid word.")
                         messages.info(request, "Congrats, Word Found!")
                         return redirect('level3')
@@ -285,6 +307,7 @@ def level3(request):
 
                         extra_list.append(user_input)
                         definition.append(check)
+                        Point.add_extra_points()
                         if len(extra_list) % 2 == 0:
                             messages.info(request,"You earned 1 Point for 2 extra words")
                         messages.info(request, "Congrats, Extra Word Found!")
@@ -300,7 +323,7 @@ def level3(request):
                 return render(request,"term/done.html", context)
     else:
         form = levelone()
-    context={'form':form, 'que':question, 'point':0}
+    context={'form':form, 'que':question, 'point':Point.get_points()}
     return render(request, "term/level3.html", context)
 
 
@@ -334,6 +357,7 @@ def level4(request):
                     if user_input in word_list:
                         word_found.append(user_input)
                         definition.append(check)
+                        Point.add_points()
                         messages.info(request,"You earned 2 points for every valid word.")
                         messages.info(request, "Congrats, Word Found!")
                         return redirect('level4')
@@ -347,6 +371,7 @@ def level4(request):
 
                         extra_list.append(user_input)
                         definition.append(check)
+                        Point.add_extra_points()
                         if len(extra_list) % 2 == 0:
                             messages.info(request,"You earned 1 Point for 2 extra words")
                         messages.info(request, "Congrats, Extra Word Found!")
@@ -362,7 +387,7 @@ def level4(request):
                 return render(request,"term/done.html", context)
     else:
         form = levelone()
-    context={'form':form, 'que':question, 'point':0}
+    context={'form':form, 'que':question, 'point':Point.get_points()}
     return render(request, "term/level4.html", context)
 
 
@@ -396,6 +421,7 @@ def level5(request):
                     if user_input in word_list:
                         word_found.append(user_input)
                         definition.append(check)
+                        Point.add_points()
                         messages.info(request,"You earned 2 points for every valid word.")
                         messages.info(request, "Congrats, Word Found!")
                         return redirect('level5')
@@ -409,6 +435,7 @@ def level5(request):
 
                         extra_list.append(user_input)
                         definition.append(check)
+                        Point.add_extra_points()
                         if len(extra_list) % 2 == 0:
                             messages.info(request,"You earned 1 Point for 2 extra words")
                         messages.info(request, "Congrats, Extra Word Found!")
@@ -424,7 +451,7 @@ def level5(request):
                 return render(request,"term/done.html", context)
     else:
         form = levelone()
-    context={'form':form, 'que':question, 'point':0}
+    context={'form':form, 'que':question, 'point':Point.get_points()}
     return render(request, "term/level5.html", context)
 
 
@@ -458,6 +485,7 @@ def level6(request):
                     if user_input in word_list:
                         word_found.append(user_input)
                         definition.append(check)
+                        Point.add_points()
                         messages.info(request,"You earned 2 points for every valid word.")
                         messages.info(request, "Congrats, Word Found!")
                         return redirect('level6')
@@ -471,6 +499,7 @@ def level6(request):
 
                         extra_list.append(user_input)
                         definition.append(check)
+                        Point.add_extra_points()
                         if len(extra_list) % 2 == 0:
                             messages.info(request,"You earned 1 Point for 2 extra words")
                         messages.info(request, "Congrats, Extra Word Found!")
@@ -486,7 +515,7 @@ def level6(request):
                 return render(request,"term/done.html", context)
     else:
         form = levelone()
-    context={'form':form, 'que':question, 'point':0}
+    context={'form':form, 'que':question, 'point':Point.get_points()}
     return render(request, "term/level6.html", context)
 
 
@@ -520,6 +549,7 @@ def level7(request):
                     if user_input in word_list:
                         word_found.append(user_input)
                         definition.append(check)
+                        Point.add_points()
                         messages.info(request,"You earned 2 points for every valid word.")
                         messages.info(request, "Congrats, Word Found!")
                         return redirect('level7')
@@ -533,6 +563,7 @@ def level7(request):
 
                         extra_list.append(user_input)
                         definition.append(check)
+                        Point.add_extra_points()
                         if len(extra_list) % 2 == 0:
                             messages.info(request,"You earned 1 Point for 2 extra words")
                         messages.info(request, "Congrats, Extra Word Found!")
@@ -548,7 +579,7 @@ def level7(request):
                 return render(request,"term/done.html", context)
     else:
         form = levelone()
-    context={'form':form, 'que':question, 'point':0}
+    context={'form':form, 'que':question, 'point':Point.get_points()}
     return render(request, "term/level7.html", context)
 
 
@@ -582,6 +613,7 @@ def level8(request):
                     if user_input in word_list:
                         word_found.append(user_input)
                         definition.append(check)
+                        Point.add_points()
                         messages.info(request,"You earned 2 points for every valid word.")
                         messages.info(request, "Congrats, Word Found!")
                         return redirect('level8')
@@ -595,6 +627,7 @@ def level8(request):
 
                         extra_list.append(user_input)
                         definition.append(check)
+                        Point.add_extra_points()
                         if len(extra_list) % 2 == 0:
                             messages.info(request,"You earned 1 Point for 2 extra words")
                         messages.info(request, "Congrats, Extra Word Found!")
@@ -610,7 +643,7 @@ def level8(request):
                 return render(request,"term/done.html", context)
     else:
         form = levelone()
-    context={'form':form, 'que':question, 'point':0}
+    context={'form':form, 'que':question, 'point':Point.get_points()}
     return render(request, "term/level8.html", context)
 
 
@@ -644,6 +677,7 @@ def level9(request):
                     if user_input in word_list:
                         word_found.append(user_input)
                         definition.append(check)
+                        Point.add_points()
                         messages.info(request,"You earned 2 points for every valid word.")
                         messages.info(request, "Congrats, Word Found!")
                         return redirect('level9')
@@ -657,6 +691,7 @@ def level9(request):
 
                         extra_list.append(user_input)
                         definition.append(check)
+                        Point.add_extra_points()
                         if len(extra_list) % 2 == 0:
                             messages.info(request,"You earned 1 Point for 2 extra words")
                         messages.info(request, "Congrats, Extra Word Found!")
@@ -672,7 +707,7 @@ def level9(request):
                 return render(request,"term/done.html", context)
     else:
         form = levelone()
-    context={'form':form, 'que':question, 'point':0}
+    context={'form':form, 'que':question, 'point':Point.get_points()}
     return render(request, "term/level9.html", context)
 
 
@@ -706,6 +741,7 @@ def level10(request):
                     if user_input in word_list:
                         word_found.append(user_input)
                         definition.append(check)
+                        Point.add_points()
                         messages.info(request,"You earned 2 points for every valid word.")
                         messages.info(request, "Congrats, Word Found!")
                         return redirect('level10')
@@ -719,6 +755,7 @@ def level10(request):
 
                         extra_list.append(user_input)
                         definition.append(check)
+                        Point.add_extra_points()
                         if len(extra_list) % 2 == 0:
                             messages.info(request,"You earned 1 Point for 2 extra words")
                         messages.info(request, "Congrats, Extra Word Found!")
@@ -739,5 +776,5 @@ def level10(request):
                 return render(request,"term/done.html", context)
     else:
         form = levelone()
-    context={'form':form, 'que':question, 'point':0}
+    context={'form':form, 'que':question, 'point':Point.get_points()}
     return render(request, "term/level10.html", context)
