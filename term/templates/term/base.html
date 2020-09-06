@@ -37,12 +37,12 @@
             {% if user.is_authenticated %}
             <a href="#" class="p-3 text-decoration-none text-light" style="font-family: 'Fredoka One';font-size: 18px;">{{user.username}}</a>
             <a href="/accounts/logout/" class="p-3 text-decoration-none text-light" style="font-family: 'Fredoka One';font-size: 18px;">Log-Out</a>
-            <a href="ap" class="p-3 text-decoration-none text-light" style="font-family: 'Fredoka One';font-size: 18px;">Contact-Us</a>
+            <a href="/instructions/" class="p-3 text-decoration-none text-light" style="font-family: 'Fredoka One';font-size: 18px;">Instructions</a>
             <a href="#" class="p-3 text-decoration-none text-light" style="font-family: 'Fredoka One';font-size: 18px;">About-Us</a>
             
             {% else %}
             <a href="/register/" class="p-3 text-decoration-none text-light" style="font-family: 'Fredoka One';font-size: 18px;">Sign-Up</a>
-            <a href="#" class="p-3 text-decoration-none text-light" style="font-family: 'Fredoka One';font-size: 18px;">Contact-Us</a>
+            <a href="/instructions/" class="p-3 text-decoration-none text-light" style="font-family: 'Fredoka One';font-size: 18px;">Instructions</a>
             <a href="#" class="p-3 text-decoration-none text-light" style="font-family: 'Fredoka One';font-size: 18px;">About-Us</a>
             {% endif %}
             
