@@ -8,12 +8,12 @@ from .forms import levelone
 from PyDictionary import PyDictionary
 import random
 
+
 extra_list = []
 word_found = []
 definition = []
 
 
-# checks if a word has been found in the to_find list
 def check_list(to_find, found):
     count = 0
     to_find_len = len(to_find)
@@ -47,7 +47,6 @@ def split(word, user_word):
         return False
 
 
-# checks if the user_input has already been discovered
 def check_word_found(word):
     if word in word_found:
         # print("You have already found this word \n")
@@ -56,7 +55,6 @@ def check_word_found(word):
         return False
 
 
-# checks if the user entered word is an extra word that has been found
 def check_extra_word_found(word):
     if word in extra_list:
         return True
@@ -64,7 +62,6 @@ def check_extra_word_found(word):
         return False
 
 
-# checks if the word entered consists of any numbers or symbols
 def spell_check(word):
     char_list = ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '!', '"', '#', '$', '%', '&', '\\', ' ', "'", '(',
                  ')', '*', '+', ',', '-', '.', '/', ':', ';', '?', '@', '[', ']', '^', '_', '`', '{', '|', '}', '~']
@@ -72,16 +69,15 @@ def spell_check(word):
     for x in new_word:
         if x in char_list:
             return False
-    # block_print()
+    #block_print()
     check = PyDictionary(word).getMeanings()
-    # enable_print()
+    #enable_print()
     if check == {word: None}:
         return False
     else:
         return check
 
 
-# re scrambles the question
 def WordScrambler(word):
     listWord = list(word)
     random.shuffle(listWord)
@@ -98,7 +94,6 @@ def index(request):
     return render(request, "term/index.html")
 
 
-# registers the username and password entered by the user
 def register(request):
     if request.method == 'POST':
         form = UserCreationForm(request.POST)
@@ -120,10 +115,11 @@ def register(request):
 def levels(request):
     return render(request, "term/level.html")
 
+def ins(request):
+    return render(request, "term/instructions.html")
 
-# level 1 starts here
 def level1(request):
-    question = "datoy"
+    question="datoy"
     word_list = ["today", "toady", "toad", "toy", "tad"]
     if request.method == 'POST':
         form = levelone(request.POST)
@@ -134,17 +130,17 @@ def level1(request):
                 limit = len(user_input)
 
                 if limit <= 2:
-                    messages.info(request, "Please enter a word with 3 characters or above.")
+                    messages.info(request,"Please enter a word with 3 characters or above.")
                     return redirect('level1')
 
                 if user_input == "_scramble":
                     re_scramble = WordScrambler(question)
                     question = re_scramble
-                    messages.info(request, "Your question has been re_scrambled")
-                    return render(request, "term/level1.html", {'form': form, 'que': question})
+                    messages.info(request,"Your question has been re_scrambled")
+                    return render(request, "term/level1.html",{'form':form, 'que':question})
 
                 if split(question, user_input) is False:
-                    messages.info(request, "Please enter a word with the characters in the scrambled word")
+                    messages.info(request,"Please enter a word with the characters in the scrambled word")
                     return redirect('level1')
 
                 check = spell_check(user_input)
@@ -152,12 +148,12 @@ def level1(request):
                     if user_input in word_list:
                         word_found.append(user_input)
                         definition.append(check)
-                        messages.info(request, "You earned 2 points for every valid word.")
+                        messages.info(request,"You earned 2 points for every valid word.")
                         messages.info(request, "Congrats, Word Found!")
                         return redirect('level1')
                     else:
                         if check_word_found(user_input) is True:
-                            messages.info(request, "You have already found this word")
+                            messages.info(request,"You have already found this word")
                             return redirect('level1')
                         elif check_extra_word_found(user_input) is True:
                             messages.info(request, "You have already found this word")
@@ -166,7 +162,7 @@ def level1(request):
                         extra_list.append(user_input)
                         definition.append(check)
                         if len(extra_list) % 2 == 0:
-                            messages.info(request, "You earned 1 Point for 2 extra words")
+                            messages.info(request,"You earned 1 Point for 2 extra words")
                         messages.info(request, "Congrats, Extra Word Found!")
                         return redirect('level1')
                 else:
@@ -176,17 +172,16 @@ def level1(request):
                 messages.info(request, "You have finished the level")
                 # context={'form':form, 'que':question}
                 # return render(request, "term/level1.html", context)
-                context = {'word': word_found, 'extra': extra_list, 'def': definition}
-                return render(request, "term/done.html", context)
+                context = {'word':word_found, 'extra':extra_list, 'def':definition}
+                return render(request,"term/done.html", context)
     else:
         form = levelone()
-    context = {'form': form, 'que': question, 'point': 0}
+    context={'form':form, 'que':question, 'point':0, 'lev':"Level 1"}
     return render(request, "term/level1.html", context)
 
 
-# level 2 starts here
 def level2(request):
-    question = "igyleln"
+    question="igyleln"
     word_list = ["yelling", "eying", "lying", "glen", "lien"]
     if request.method == 'POST':
         form = levelone(request.POST)
@@ -197,17 +192,17 @@ def level2(request):
                 limit = len(user_input)
 
                 if limit <= 2:
-                    messages.info(request, "Please enter a word with 3 characters or above.")
+                    messages.info(request,"Please enter a word with 3 characters or above.")
                     return redirect('level2')
 
                 if user_input == "_scramble":
                     re_scramble = WordScrambler(question)
                     question = re_scramble
-                    messages.info(request, "Your question has been re_scrambled")
-                    return render(request, "term/level1.html", {'form': form, 'que': question})
+                    messages.info(request,"Your question has been re_scrambled")
+                    return render(request, "term/level2.html",{'form':form, 'que':question})
 
                 if split(question, user_input) is False:
-                    messages.info(request, "Please enter a word with the characters in the scrambled word")
+                    messages.info(request,"Please enter a word with the characters in the scrambled word")
                     return redirect('level2')
 
                 check = spell_check(user_input)
@@ -215,12 +210,12 @@ def level2(request):
                     if user_input in word_list:
                         word_found.append(user_input)
                         definition.append(check)
-                        messages.info(request, "You earned 2 points for every valid word.")
+                        messages.info(request,"You earned 2 points for every valid word.")
                         messages.info(request, "Congrats, Word Found!")
                         return redirect('level2')
                     else:
                         if check_word_found(user_input) is True:
-                            messages.info(request, "You have already found this word")
+                            messages.info(request,"You have already found this word")
                             return redirect('level2')
                         elif check_extra_word_found(user_input) is True:
                             messages.info(request, "You have already found this word")
@@ -229,7 +224,7 @@ def level2(request):
                         extra_list.append(user_input)
                         definition.append(check)
                         if len(extra_list) % 2 == 0:
-                            messages.info(request, "You earned 1 Point for 2 extra words")
+                            messages.info(request,"You earned 1 Point for 2 extra words")
                         messages.info(request, "Congrats, Extra Word Found!")
                         return redirect('level2')
                 else:
@@ -239,15 +234,14 @@ def level2(request):
                 messages.info(request, "You have finished the level")
                 # context={'form':form, 'que':question}
                 # return render(request, "term/level1.html", context)
-                context = {'word': word_found, 'extra': extra_list, 'def': definition}
-                return render(request, "term/done.html", context)
+                context = {'word':word_found, 'extra':extra_list, 'def':definition}
+                return render(request,"term/done.html", context)
     else:
         form = levelone()
-    context = {'form': form, 'que': question, 'point': 0}
-    return render(request, "term/level1.html", context)
+    context={'form':form, 'que':question, 'point':0}
+    return render(request, "term/level2.html", context)
 
 
-# level 3 starts here
 def level3(request):
     question = "irifgd"
     word_list = ["frigid", "rigid", "grid", "gird", "rig"]
@@ -260,17 +254,17 @@ def level3(request):
                 limit = len(user_input)
 
                 if limit <= 2:
-                    messages.info(request, "Please enter a word with 3 characters or above.")
+                    messages.info(request,"Please enter a word with 3 characters or above.")
                     return redirect('level3')
 
                 if user_input == "_scramble":
                     re_scramble = WordScrambler(question)
                     question = re_scramble
-                    messages.info(request, "Your question has been re_scrambled")
-                    return render(request, "term/level1.html", {'form': form, 'que': question})
+                    messages.info(request,"Your question has been re_scrambled")
+                    return render(request, "term/level3.html",{'form':form, 'que':question})
 
                 if split(question, user_input) is False:
-                    messages.info(request, "Please enter a word with the characters in the scrambled word")
+                    messages.info(request,"Please enter a word with the characters in the scrambled word")
                     return redirect('level3')
 
                 check = spell_check(user_input)
@@ -278,12 +272,12 @@ def level3(request):
                     if user_input in word_list:
                         word_found.append(user_input)
                         definition.append(check)
-                        messages.info(request, "You earned 2 points for every valid word.")
+                        messages.info(request,"You earned 2 points for every valid word.")
                         messages.info(request, "Congrats, Word Found!")
                         return redirect('level3')
                     else:
                         if check_word_found(user_input) is True:
-                            messages.info(request, "You have already found this word")
+                            messages.info(request,"You have already found this word")
                             return redirect('level3')
                         elif check_extra_word_found(user_input) is True:
                             messages.info(request, "You have already found this word")
@@ -292,7 +286,7 @@ def level3(request):
                         extra_list.append(user_input)
                         definition.append(check)
                         if len(extra_list) % 2 == 0:
-                            messages.info(request, "You earned 1 Point for 2 extra words")
+                            messages.info(request,"You earned 1 Point for 2 extra words")
                         messages.info(request, "Congrats, Extra Word Found!")
                         return redirect('level3')
                 else:
@@ -302,15 +296,14 @@ def level3(request):
                 messages.info(request, "You have finished the level")
                 # context={'form':form, 'que':question}
                 # return render(request, "term/level1.html", context)
-                context = {'word': word_found, 'extra': extra_list, 'def': definition}
-                return render(request, "term/done.html", context)
+                context = {'word':word_found, 'extra':extra_list, 'def':definition}
+                return render(request,"term/done.html", context)
     else:
         form = levelone()
-    context = {'form': form, 'que': question, 'point': 0}
-    return render(request, "term/level1.html", context)
+    context={'form':form, 'que':question, 'point':0}
+    return render(request, "term/level3.html", context)
 
 
-# level 4 starts here
 def level4(request):
     question = "teerh"
     word_list = ["there", "three", "ether", "here", "tee"]
@@ -323,17 +316,17 @@ def level4(request):
                 limit = len(user_input)
 
                 if limit <= 2:
-                    messages.info(request, "Please enter a word with 3 characters or above.")
+                    messages.info(request,"Please enter a word with 3 characters or above.")
                     return redirect('level4')
 
                 if user_input == "_scramble":
                     re_scramble = WordScrambler(question)
                     question = re_scramble
-                    messages.info(request, "Your question has been re_scrambled")
-                    return render(request, "term/level1.html", {'form': form, 'que': question})
+                    messages.info(request,"Your question has been re_scrambled")
+                    return render(request, "term/level4.html",{'form':form, 'que':question})
 
                 if split(question, user_input) is False:
-                    messages.info(request, "Please enter a word with the characters in the scrambled word")
+                    messages.info(request,"Please enter a word with the characters in the scrambled word")
                     return redirect('level4')
 
                 check = spell_check(user_input)
@@ -341,12 +334,12 @@ def level4(request):
                     if user_input in word_list:
                         word_found.append(user_input)
                         definition.append(check)
-                        messages.info(request, "You earned 2 points for every valid word.")
+                        messages.info(request,"You earned 2 points for every valid word.")
                         messages.info(request, "Congrats, Word Found!")
                         return redirect('level4')
                     else:
                         if check_word_found(user_input) is True:
-                            messages.info(request, "You have already found this word")
+                            messages.info(request,"You have already found this word")
                             return redirect('level4')
                         elif check_extra_word_found(user_input) is True:
                             messages.info(request, "You have already found this word")
@@ -355,7 +348,7 @@ def level4(request):
                         extra_list.append(user_input)
                         definition.append(check)
                         if len(extra_list) % 2 == 0:
-                            messages.info(request, "You earned 1 Point for 2 extra words")
+                            messages.info(request,"You earned 1 Point for 2 extra words")
                         messages.info(request, "Congrats, Extra Word Found!")
                         return redirect('level4')
                 else:
@@ -365,15 +358,14 @@ def level4(request):
                 messages.info(request, "You have finished the level")
                 # context={'form':form, 'que':question}
                 # return render(request, "term/level1.html", context)
-                context = {'word': word_found, 'extra': extra_list, 'def': definition}
-                return render(request, "term/done.html", context)
+                context = {'word':word_found, 'extra':extra_list, 'def':definition}
+                return render(request,"term/done.html", context)
     else:
         form = levelone()
-    context = {'form': form, 'que': question, 'point': 0}
-    return render(request, "term/level1.html", context)
+    context={'form':form, 'que':question, 'point':0}
+    return render(request, "term/level4.html", context)
 
 
-# level 5 starts here
 def level5(request):
     question = "voiinl"
     word_list = ["violin", "lion", "loin", "oil", "nil"]
@@ -386,17 +378,17 @@ def level5(request):
                 limit = len(user_input)
 
                 if limit <= 2:
-                    messages.info(request, "Please enter a word with 3 characters or above.")
+                    messages.info(request,"Please enter a word with 3 characters or above.")
                     return redirect('level5')
 
                 if user_input == "_scramble":
                     re_scramble = WordScrambler(question)
                     question = re_scramble
-                    messages.info(request, "Your question has been re_scrambled")
-                    return render(request, "term/level1.html", {'form': form, 'que': question})
+                    messages.info(request,"Your question has been re_scrambled")
+                    return render(request, "term/level5.html",{'form':form, 'que':question})
 
                 if split(question, user_input) is False:
-                    messages.info(request, "Please enter a word with the characters in the scrambled word")
+                    messages.info(request,"Please enter a word with the characters in the scrambled word")
                     return redirect('level5')
 
                 check = spell_check(user_input)
@@ -404,12 +396,12 @@ def level5(request):
                     if user_input in word_list:
                         word_found.append(user_input)
                         definition.append(check)
-                        messages.info(request, "You earned 2 points for every valid word.")
+                        messages.info(request,"You earned 2 points for every valid word.")
                         messages.info(request, "Congrats, Word Found!")
                         return redirect('level5')
                     else:
                         if check_word_found(user_input) is True:
-                            messages.info(request, "You have already found this word")
+                            messages.info(request,"You have already found this word")
                             return redirect('level5')
                         elif check_extra_word_found(user_input) is True:
                             messages.info(request, "You have already found this word")
@@ -418,7 +410,7 @@ def level5(request):
                         extra_list.append(user_input)
                         definition.append(check)
                         if len(extra_list) % 2 == 0:
-                            messages.info(request, "You earned 1 Point for 2 extra words")
+                            messages.info(request,"You earned 1 Point for 2 extra words")
                         messages.info(request, "Congrats, Extra Word Found!")
                         return redirect('level5')
                 else:
@@ -428,15 +420,14 @@ def level5(request):
                 messages.info(request, "You have finished the level")
                 # context={'form':form, 'que':question}
                 # return render(request, "term/level1.html", context)
-                context = {'word': word_found, 'extra': extra_list, 'def': definition}
-                return render(request, "term/done.html", context)
+                context = {'word':word_found, 'extra':extra_list, 'def':definition}
+                return render(request,"term/done.html", context)
     else:
         form = levelone()
-    context = {'form': form, 'que': question, 'point': 0}
-    return render(request, "term/level1.html", context)
+    context={'form':form, 'que':question, 'point':0}
+    return render(request, "term/level5.html", context)
 
 
-# level 6 starts here
 def level6(request):
     question = "mmeiud"
     word_list = ["medium", "mime", "dime", "die", "med"]
@@ -449,17 +440,17 @@ def level6(request):
                 limit = len(user_input)
 
                 if limit <= 2:
-                    messages.info(request, "Please enter a word with 3 characters or above.")
+                    messages.info(request,"Please enter a word with 3 characters or above.")
                     return redirect('level6')
 
                 if user_input == "_scramble":
                     re_scramble = WordScrambler(question)
                     question = re_scramble
-                    messages.info(request, "Your question has been re_scrambled")
-                    return render(request, "term/level1.html", {'form': form, 'que': question})
+                    messages.info(request,"Your question has been re_scrambled")
+                    return render(request, "term/leve6.html",{'form':form, 'que':question})
 
                 if split(question, user_input) is False:
-                    messages.info(request, "Please enter a word with the characters in the scrambled word")
+                    messages.info(request,"Please enter a word with the characters in the scrambled word")
                     return redirect('level6')
 
                 check = spell_check(user_input)
@@ -467,12 +458,12 @@ def level6(request):
                     if user_input in word_list:
                         word_found.append(user_input)
                         definition.append(check)
-                        messages.info(request, "You earned 2 points for every valid word.")
+                        messages.info(request,"You earned 2 points for every valid word.")
                         messages.info(request, "Congrats, Word Found!")
                         return redirect('level6')
                     else:
                         if check_word_found(user_input) is True:
-                            messages.info(request, "You have already found this word")
+                            messages.info(request,"You have already found this word")
                             return redirect('level6')
                         elif check_extra_word_found(user_input) is True:
                             messages.info(request, "You have already found this word")
@@ -481,7 +472,7 @@ def level6(request):
                         extra_list.append(user_input)
                         definition.append(check)
                         if len(extra_list) % 2 == 0:
-                            messages.info(request, "You earned 1 Point for 2 extra words")
+                            messages.info(request,"You earned 1 Point for 2 extra words")
                         messages.info(request, "Congrats, Extra Word Found!")
                         return redirect('level6')
                 else:
@@ -491,15 +482,14 @@ def level6(request):
                 messages.info(request, "You have finished the level")
                 # context={'form':form, 'que':question}
                 # return render(request, "term/level1.html", context)
-                context = {'word': word_found, 'extra': extra_list, 'def': definition}
-                return render(request, "term/done.html", context)
+                context = {'word':word_found, 'extra':extra_list, 'def':definition}
+                return render(request,"term/done.html", context)
     else:
         form = levelone()
-    context = {'form': form, 'que': question, 'point': 0}
-    return render(request, "term/level1.html", context)
+    context={'form':form, 'que':question, 'point':0}
+    return render(request, "term/level6.html", context)
 
 
-# level 7 starts here
 def level7(request):
     question = "neozd"
     word_list = ["dozen", "zone", "node", "doze", "eon"]
@@ -512,17 +502,17 @@ def level7(request):
                 limit = len(user_input)
 
                 if limit <= 2:
-                    messages.info(request, "Please enter a word with 3 characters or above.")
+                    messages.info(request,"Please enter a word with 3 characters or above.")
                     return redirect('level7')
 
                 if user_input == "_scramble":
                     re_scramble = WordScrambler(question)
                     question = re_scramble
-                    messages.info(request, "Your question has been re_scrambled")
-                    return render(request, "term/level1.html", {'form': form, 'que': question})
+                    messages.info(request,"Your question has been re_scrambled")
+                    return render(request, "term/level7.html",{'form':form, 'que':question})
 
                 if split(question, user_input) is False:
-                    messages.info(request, "Please enter a word with the characters in the scrambled word")
+                    messages.info(request,"Please enter a word with the characters in the scrambled word")
                     return redirect('level7')
 
                 check = spell_check(user_input)
@@ -530,12 +520,12 @@ def level7(request):
                     if user_input in word_list:
                         word_found.append(user_input)
                         definition.append(check)
-                        messages.info(request, "You earned 2 points for every valid word.")
+                        messages.info(request,"You earned 2 points for every valid word.")
                         messages.info(request, "Congrats, Word Found!")
                         return redirect('level7')
                     else:
                         if check_word_found(user_input) is True:
-                            messages.info(request, "You have already found this word")
+                            messages.info(request,"You have already found this word")
                             return redirect('level7')
                         elif check_extra_word_found(user_input) is True:
                             messages.info(request, "You have already found this word")
@@ -544,7 +534,7 @@ def level7(request):
                         extra_list.append(user_input)
                         definition.append(check)
                         if len(extra_list) % 2 == 0:
-                            messages.info(request, "You earned 1 Point for 2 extra words")
+                            messages.info(request,"You earned 1 Point for 2 extra words")
                         messages.info(request, "Congrats, Extra Word Found!")
                         return redirect('level7')
                 else:
@@ -554,15 +544,14 @@ def level7(request):
                 messages.info(request, "You have finished the level")
                 # context={'form':form, 'que':question}
                 # return render(request, "term/level1.html", context)
-                context = {'word': word_found, 'extra': extra_list, 'def': definition}
-                return render(request, "term/done.html", context)
+                context = {'word':word_found, 'extra':extra_list, 'def':definition}
+                return render(request,"term/done.html", context)
     else:
         form = levelone()
-    context = {'form': form, 'que': question, 'point': 0}
-    return render(request, "term/level1.html", context)
+    context={'form':form, 'que':question, 'point':0}
+    return render(request, "term/level7.html", context)
 
 
-# level 8 starts here
 def level8(request):
     question = "jnleug"
     word_list = ["jungle", "lunge", "lung", "glue", "june"]
@@ -575,17 +564,17 @@ def level8(request):
                 limit = len(user_input)
 
                 if limit <= 2:
-                    messages.info(request, "Please enter a word with 3 characters or above.")
+                    messages.info(request,"Please enter a word with 3 characters or above.")
                     return redirect('level8')
 
                 if user_input == "_scramble":
                     re_scramble = WordScrambler(question)
                     question = re_scramble
-                    messages.info(request, "Your question has been re_scrambled")
-                    return render(request, "term/level1.html", {'form': form, 'que': question})
+                    messages.info(request,"Your question has been re_scrambled")
+                    return render(request, "term/level8.html",{'form':form, 'que':question})
 
                 if split(question, user_input) is False:
-                    messages.info(request, "Please enter a word with the characters in the scrambled word")
+                    messages.info(request,"Please enter a word with the characters in the scrambled word")
                     return redirect('level8')
 
                 check = spell_check(user_input)
@@ -593,12 +582,12 @@ def level8(request):
                     if user_input in word_list:
                         word_found.append(user_input)
                         definition.append(check)
-                        messages.info(request, "You earned 2 points for every valid word.")
+                        messages.info(request,"You earned 2 points for every valid word.")
                         messages.info(request, "Congrats, Word Found!")
                         return redirect('level8')
                     else:
                         if check_word_found(user_input) is True:
-                            messages.info(request, "You have already found this word")
+                            messages.info(request,"You have already found this word")
                             return redirect('level8')
                         elif check_extra_word_found(user_input) is True:
                             messages.info(request, "You have already found this word")
@@ -607,7 +596,7 @@ def level8(request):
                         extra_list.append(user_input)
                         definition.append(check)
                         if len(extra_list) % 2 == 0:
-                            messages.info(request, "You earned 1 Point for 2 extra words")
+                            messages.info(request,"You earned 1 Point for 2 extra words")
                         messages.info(request, "Congrats, Extra Word Found!")
                         return redirect('level8')
                 else:
@@ -617,15 +606,14 @@ def level8(request):
                 messages.info(request, "You have finished the level")
                 # context={'form':form, 'que':question}
                 # return render(request, "term/level1.html", context)
-                context = {'word': word_found, 'extra': extra_list, 'def': definition}
-                return render(request, "term/done.html", context)
+                context = {'word':word_found, 'extra':extra_list, 'def':definition}
+                return render(request,"term/done.html", context)
     else:
         form = levelone()
-    context = {'form': form, 'que': question, 'point': 0}
-    return render(request, "term/level1.html", context)
+    context={'form':form, 'que':question, 'point':0}
+    return render(request, "term/level8.html", context)
 
 
-# level 9 starts here
 def level9(request):
     question = "pclbiu"
     word_list = ["public", "picul", "blip", "cub", "lip"]
@@ -638,17 +626,17 @@ def level9(request):
                 limit = len(user_input)
 
                 if limit <= 2:
-                    messages.info(request, "Please enter a word with 3 characters or above.")
+                    messages.info(request,"Please enter a word with 3 characters or above.")
                     return redirect('level9')
 
                 if user_input == "_scramble":
                     re_scramble = WordScrambler(question)
                     question = re_scramble
-                    messages.info(request, "Your question has been re_scrambled")
-                    return render(request, "term/level1.html", {'form': form, 'que': question})
+                    messages.info(request,"Your question has been re_scrambled")
+                    return render(request, "term/level9.html",{'form':form, 'que':question})
 
                 if split(question, user_input) is False:
-                    messages.info(request, "Please enter a word with the characters in the scrambled word")
+                    messages.info(request,"Please enter a word with the characters in the scrambled word")
                     return redirect('level9')
 
                 check = spell_check(user_input)
@@ -656,12 +644,12 @@ def level9(request):
                     if user_input in word_list:
                         word_found.append(user_input)
                         definition.append(check)
-                        messages.info(request, "You earned 2 points for every valid word.")
+                        messages.info(request,"You earned 2 points for every valid word.")
                         messages.info(request, "Congrats, Word Found!")
                         return redirect('level9')
                     else:
                         if check_word_found(user_input) is True:
-                            messages.info(request, "You have already found this word")
+                            messages.info(request,"You have already found this word")
                             return redirect('level9')
                         elif check_extra_word_found(user_input) is True:
                             messages.info(request, "You have already found this word")
@@ -670,7 +658,7 @@ def level9(request):
                         extra_list.append(user_input)
                         definition.append(check)
                         if len(extra_list) % 2 == 0:
-                            messages.info(request, "You earned 1 Point for 2 extra words")
+                            messages.info(request,"You earned 1 Point for 2 extra words")
                         messages.info(request, "Congrats, Extra Word Found!")
                         return redirect('level9')
                 else:
@@ -680,15 +668,14 @@ def level9(request):
                 messages.info(request, "You have finished the level")
                 # context={'form':form, 'que':question}
                 # return render(request, "term/level1.html", context)
-                context = {'word': word_found, 'extra': extra_list, 'def': definition}
-                return render(request, "term/done.html", context)
+                context = {'word':word_found, 'extra':extra_list, 'def':definition}
+                return render(request,"term/done.html", context)
     else:
         form = levelone()
-    context = {'form': form, 'que': question, 'point': 0}
-    return render(request, "term/level1.html", context)
+    context={'form':form, 'que':question, 'point':0}
+    return render(request, "term/level9.html", context)
 
 
-# last level starts here
 def level10(request):
     question = "bcutcka"
     word_list = ["cutback", "buck", "tuba", "tack", "tab"]
@@ -701,17 +688,17 @@ def level10(request):
                 limit = len(user_input)
 
                 if limit <= 2:
-                    messages.info(request, "Please enter a word with 3 characters or above.")
+                    messages.info(request,"Please enter a word with 3 characters or above.")
                     return redirect('level10')
 
                 if user_input == "_scramble":
                     re_scramble = WordScrambler(question)
                     question = re_scramble
-                    messages.info(request, "Your question has been re_scrambled")
-                    return render(request, "term/level1.html", {'form': form, 'que': question})
+                    messages.info(request,"Your question has been re_scrambled")
+                    return render(request, "term/level10.html",{'form':form, 'que':question})
 
                 if split(question, user_input) is False:
-                    messages.info(request, "Please enter a word with the characters in the scrambled word")
+                    messages.info(request,"Please enter a word with the characters in the scrambled word")
                     return redirect('level10')
 
                 check = spell_check(user_input)
@@ -719,12 +706,12 @@ def level10(request):
                     if user_input in word_list:
                         word_found.append(user_input)
                         definition.append(check)
-                        messages.info(request, "You earned 2 points for every valid word.")
+                        messages.info(request,"You earned 2 points for every valid word.")
                         messages.info(request, "Congrats, Word Found!")
                         return redirect('level10')
                     else:
                         if check_word_found(user_input) is True:
-                            messages.info(request, "You have already found this word")
+                            messages.info(request,"You have already found this word")
                             return redirect('level10')
                         elif check_extra_word_found(user_input) is True:
                             messages.info(request, "You have already found this word")
@@ -733,7 +720,7 @@ def level10(request):
                         extra_list.append(user_input)
                         definition.append(check)
                         if len(extra_list) % 2 == 0:
-                            messages.info(request, "You earned 1 Point for 2 extra words")
+                            messages.info(request,"You earned 1 Point for 2 extra words")
                         messages.info(request, "Congrats, Extra Word Found!")
                         return redirect('level10')
                 else:
@@ -748,9 +735,9 @@ def level10(request):
                                        "-----------------------")
                 # context={'form':form, 'que':question}
                 # return render(request, "term/level1.html", context)
-                context = {'word': word_found, 'extra': extra_list, 'def': definition}
-                return render(request, "term/done.html", context)
+                context = {'word':word_found, 'extra':extra_list, 'def':definition}
+                return render(request,"term/done.html", context)
     else:
         form = levelone()
-    context = {'form': form, 'que': question, 'point': 0}
-    return render(request, "term/level1.html", context)
+    context={'form':form, 'que':question, 'point':0}
+    return render(request, "term/level10.html", context)

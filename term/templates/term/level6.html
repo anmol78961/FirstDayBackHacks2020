@@ -22,9 +22,9 @@
             {% endif %} {% if next %}
             <p>Hey, you can't access that page.</p>
             {% endif %}
-            <form action="/level1/" method="post">
+            <form action="/level6/" method="post">
                 {% csrf_token %}
-                <h2 class="display-4 text-center"> {{lev}} </h2>
+                <h2 class="display-4 text-center"> Level 6 </h2>
                 <p class="text-center text-light" style="font-family: 'Fredoka One';font-size: 18px;"><a
                         href="#" class="text-decoration-none " style="color:darkslategray;">Unscramble the
                         word, "{{que}}" or rather type "_scramble" to re_scramble the word</a></p>
@@ -33,7 +33,6 @@
                     <button type="submit" class="btn btn-primary btn-block" value="login">Submit</button>
                 </div>
             </form>
-            
-        </div>
+            </div>
 
         {% endblock %}
