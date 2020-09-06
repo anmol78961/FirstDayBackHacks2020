@@ -6,12 +6,15 @@ from django.contrib import messages
 from .forms import levelone
 from PyDictionary import PyDictionary
 import sys, os, random
+#from Logic.Point import Point
 
 
 extra_list = []
 word_list = ["yelling", "eying", "lying", "glen", "lien"]
 word_found = []
 definition = []
+
+
 
 
 def check_list(to_find, found):
@@ -145,6 +148,7 @@ def level1(request):
                     if user_input in word_list:
                         word_found.append(user_input)
                         definition.append(check)
+                        messages.info(request,"You earned 2 points for every valid word.")
                         messages.info(request, "Congrats, Word Found!")
                         return redirect('level1')
                     else:
@@ -157,6 +161,8 @@ def level1(request):
 
                         extra_list.append(user_input)
                         definition.append(check)
+                        if len(extra_list) % 2 == 0:
+                            messages.info(request,"You earned 1 Point for 2 extra words")
                         messages.info(request, "Congrats, Extra Word Found!")
                         return redirect('level1')
                 else:
@@ -164,8 +170,11 @@ def level1(request):
                     return redirect('level1')
             else:
                 messages.info(request, "You have finished the level")
-                return redirect('level1')
+                # context={'form':form, 'que':question}
+                # return render(request, "term/level1.html", context)
+                context = {'word':word_found, 'extra':extra_list, 'def':definition}
+                return render(request,"term/done.html", context)
     else:
         form = levelone()
-    context={'form':form, 'que':question}
+    context={'form':form, 'que':question, 'point':0}
     return render(request, "term/level1.html", context)

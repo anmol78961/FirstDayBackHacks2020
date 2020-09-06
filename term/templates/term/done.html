@@ -1,0 +1,51 @@
+{% extends "term/base.html" %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %} Level 1 {% endblock %} {% block body %}
+<div class="jumbotron jumbo-vertical-center bg-dark mb-0 radius-0">
+
+    <div class="container">
+        {% if messages %}
+        <ul class="messages">
+            {% for msg in messages %}
+            <p class="text-center">
+            <div class="alert alert-{{msg.level_tag}} alert-dismissible text-center" role="alert">
+                <button type="button" class="close" data-dismiss="alert">&times;</button>
+                {{msg.message}}
+            </div>
+            </p>
+            {% endfor %}
+        </ul>
+        {% endif %}
+        <div class="login-form">
+
+            {% if form.errors %}
+            <p>There's something wrong with what you entered!</p>
+            {% endif %} {% if next %}
+            <p>Hey, you can't access that page.</p>
+            {% endif %}
+            <form action="/levels/" method="post">
+                {% csrf_token %}
+
+                <h2 class="display-4 text-center"> Level 1 Completed</h2>
+                <img src="{% static 'images/done.svg' %}" class="mx-auto d-block"
+                style="height: 200px; width: 100%;">
+
+                <p> The words found are : </p>
+                {% for x in word %}
+                   <li> {{x}} </li>
+                {% endfor %}
+
+                <p> Definition of the  words found are : </p>
+                {% for p in def %}
+                    <li>{{p }}</li>
+                
+                {% endfor %}
+                <!-- {{form | crispy}} -->
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary btn-block" value="login">Back to levels</button>
+                </div>
+            </form>
+        </div>
+
+        {% endblock %}
