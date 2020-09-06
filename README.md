@@ -7,18 +7,18 @@ A command line game, which is further integrated into a web-app powered by Djang
 - The online platform had many conflicts and still have some. Issues will be opened-up soon.
 - The video of demo : https://youtu.be/xaR58F4cR7M
 
-Home
+### Home
 <p align="center">
   <img src="https://i.imgur.com/zhwQy0y.png" title="Home"/>
 </p>
 
 
-User-SignUp
+### User-SignUp
 <p align="center">
   <img src="https://i.imgur.com/39aYOaE.png" title="User-SignUp"/>
 </p>
 
-Levels
+### Levels
 <p align="center">
   <img src="https://i.imgur.com/tT3VBfo.jpg" title="Levels"/>
 </p>
