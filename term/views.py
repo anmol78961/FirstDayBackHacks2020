@@ -13,6 +13,7 @@ word_list = ["yelling", "eying", "lying", "glen", "lien"]
 word_found = []
 definition = []
 
+
 def check_list(to_find, found):
     count = 0
     to_find_len = len(to_find)
@@ -26,6 +27,7 @@ def check_list(to_find, found):
         return True
     else:
         return False
+
 
 def split(word, user_word):
     new_word = word.lower()
@@ -44,12 +46,14 @@ def split(word, user_word):
     else:
         return False
 
+
 def check_word_found(word):
     if word in word_found:
-        print("You have already found this word \n")
+        # print("You have already found this word \n")
         return True
     else:
         return False
+
 
 def check_extra_word_found(word):
     if word in extra_list:
@@ -74,14 +78,11 @@ def spell_check(word):
         return check
 
 
-pass
-
 def WordScrambler(word):
     listWord = list(word)
     random.shuffle(listWord)
     result = ''.join(listWord)
     return result
-
 
 
 def index(request):
@@ -114,6 +115,7 @@ def register(request):
 def levels(request):
     return render(request, "term/level.html")
 
+
 def level1(request):
     question="igyleln"
     if request.method == 'POST':
@@ -121,7 +123,7 @@ def level1(request):
 
         if form.is_valid():
             while check_list(word_list, word_found) is False:
-                user_input = str(form.cleaned_data['Word'])
+                user_input = str(form.cleaned_data['Word']).lower()
                 limit = len(user_input)
 
                 if limit <= 2:
@@ -141,23 +143,28 @@ def level1(request):
                 check = spell_check(user_input)
                 if check is not False:
                     if user_input in word_list:
-                        if user_input in word_found:
-                            messages.info(request,"The word you found has already been discovered by you. Try again please!")
+                        word_found.append(user_input)
+                        definition.append(check)
+                        messages.info(request, "Congrats, Word Found!")
+                        return redirect('level1')
+                    else:
+                        if check_word_found(user_input) is True:
+                            messages.info(request,"You have already found this word")
+                            return redirect('level1')
+                        elif check_extra_word_found(user_input) is True:
+                            messages.info(request, "You have already found this word")
                             return redirect('level1')
 
-                        #if check_extra_word_found(user_input) is True:
-                        else:
-                            if check_extra_word_found(user_input) is True:
-                                messages.info(request,"Congrats, you discovered an extra word!")
-                                return redirect('level1')
-                            print(word_found)
-                            word_found.append(user_input)
-                            definition.append(check)
-                            messages.info(request,"Congrats, Word found!")
-                            return redirect('level1')
-
-                    
-                       
+                        extra_list.append(user_input)
+                        definition.append(check)
+                        messages.info(request, "Congrats, Extra Word Found!")
+                        return redirect('level1')
+                else:
+                    messages.info(request, "Word doesn't exist, try again \n")
+                    return redirect('level1')
+            else:
+                messages.info(request, "You have finished the level")
+                return redirect('level1')
     else:
         form = levelone()
     context={'form':form, 'que':question}
