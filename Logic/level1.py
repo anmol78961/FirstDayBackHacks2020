@@ -2,9 +2,9 @@ import Dictionary
 import Scramble
 from Point import Point
 
-__question = "igyleln"
+__question = None
 extra_list = []
-word_list = ["yelling", "eying", "lying", "glen", "lien"]
+word_list = []
 word_found = []
 definition = []
 
@@ -59,9 +59,9 @@ def check_extra_word_found(word):
 
 
 # Prints everything the user has found throughout the level after the level ends
-def print_all():
+def print_all(level):
     print("----------------------------------------------------------------------------------------------------\n")
-    print("Hurray you earned ", end="")
+    print("Hurray you earned a total ", end="")
     print(Point.get_points(), "points :)", "\n")
 
     print("The words found are: ")
@@ -82,9 +82,14 @@ def print_all():
         print(y)
     print()
 
+    print("----------------------------------------------------------------------------------------------------")
+    print(f"Level {level} Over")
+    print("----------------------------------------------------------------------------------------------------")
 
-def start():
-    question = __question
+
+def start(__question, word_list, level):
+    question = __question.lower()
+    lower_word_list = [each_word.lower() for each_word in word_list]
 
     print(f"Unscramble the word \"{question}\"")
     # The user has to enter a word with 3 letters or above
@@ -95,7 +100,7 @@ def start():
     # In this loop with the help of check_list() function we can get to know if all the words are found
     # when all the words are found it exits the loop
     # then it prints all the data collected
-    while check_list(word_list, word_found) is False:
+    while check_list(lower_word_list, word_found) is False:
         user_input = str(input()).lower()
         limit = len(user_input)
 
@@ -119,7 +124,7 @@ def start():
         check = Dictionary.spell_check(user_input)
         if check is not False:
 
-            if user_input in word_list:
+            if user_input in lower_word_list:
 
                 word_found.append(user_input)
                 definition.append(check)
@@ -142,7 +147,7 @@ def start():
             print("Word doesn't exist, try again \n")
 
     else:
-        print_all()
+        print_all(level)
 
 
 pass
