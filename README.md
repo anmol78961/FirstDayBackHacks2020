@@ -1,15 +1,17 @@
 # FirstDayBackHacks2020Submission
-Taska:
-- Parth: web app
-- Dustin: basics and check the web app (cuz u know django)
-- Anmol: Basics, video and powerpoint
-- the video and powerpoint are just to explain what the app is all about
 
-TODO:
+  How The Game Works:
+-  
+  Login/Register (Parth):
+  -
+  Game Play (Anmol):
+  -
+  Requirements (Dustin):
+  -
+
 - Add Gamification
-- Merge Logic and Webapp
 
-Requirements:
+-  Requirements:
 - Web app
 - Is a word unscramble game, where a randomized set of letters are displayed on the screen.
   - the user gets points by submitting a word using as many of the letters as they can
